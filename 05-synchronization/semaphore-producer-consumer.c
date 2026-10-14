@@ -60,6 +60,7 @@ void *consume (void *id){
         sem_wait(&mutex);       // exclusao mutua (mutex) para retirar item na memoria
         
         // seçao critica
+<<<<<<< HEAD
         item = buffer[out];
         printf("[C%d] consum an item: %d (%d items | %d slots)\n", tid, item, num_items, num_slots);
         out = (out + 1) % SLOTS;
@@ -71,6 +72,17 @@ void *consume (void *id){
         sem_post(&mutex);       // fecha exclusao mutua
         sem_post(&slots);       // ao consumir um item, abrimos mais uma vaga (slot)
 
+=======
+        num_slots++;            // *coloca item
+        item = buffer[out];
+        printf("[C%d] consum an item: %d (%d items | %d slots)\n", tid, item, num_items, num_slots);
+        out = (out + 1) % SLOTS;
+        // fim da seçao critica
+        sem_post(&mutex);       // fecha exclusao mutua
+        sem_post(&slots);       // ao consumir um item, abrimos mais uma vaga (slot)
+
+        num_items--;            // *consome item
+>>>>>>> 79be596fd56856fdafbab385cddd6448e4f292f1
         sleep(2);
     }
 }
